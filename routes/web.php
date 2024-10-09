@@ -24,15 +24,15 @@ Route::get('/working', function () {
 });
 
 Route::get('/laravel-failing', function () {
-    Cache::tags('some-tag')->set('testC', 'abc123');
+    Cache::tags(['some-tag'])->set('testC', 'abc123');
 
     $responses = [
-        'before' => var_export(Cache::tags('some-tag')->get('testC'), true),
+        'before' => var_export(Cache::tags(['some-tag'])->get('testC'), true),
     ];
 
-    Cache::tags('some-tag')->forget('testC');
+    Cache::tags(['some-tag'])->flush();
 
-    $responses['after'] = var_export(Cache::tags('some-tag')->get('testC'), true);
+    $responses['after'] = var_export(Cache::tags(['some-tag'])->get('testC'), true);
 
     return response()->json($responses);
 });
