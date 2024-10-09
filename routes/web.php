@@ -36,3 +36,12 @@ Route::get('/laravel-failing', function () {
 
     return response()->json($responses);
 });
+
+Route::get('/laravel-entries', function () {
+    Cache::tags(['some-tag'])->set('testC', 'abc123');
+
+    /** @var \Illuminate\Cache\RedisTagSet $tagSet */
+    $tagSet = Cache::tags(['some-tag'])->getTags();
+
+    return var_export($tagSet->entries()->toArray(), true);
+});

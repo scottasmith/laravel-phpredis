@@ -1,7 +1,7 @@
 FROM public.ecr.aws/docker/library/php:8.3.7-fpm-bookworm AS api
 
-# install redis
-RUN pecl install -o -f redis \
+# (CHANGE VERSION TO 6.0.2 TO TEST)
+RUN pecl install -o -f redis-6.1.0 \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable redis
 
