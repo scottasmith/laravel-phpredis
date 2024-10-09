@@ -1,0 +1,33 @@
+services:
+    laravel.test:
+        build:
+            context: ./
+            dockerfile: Dockerfile
+        volumes:
+            - './:/var/www/app'
+        ports:
+            - 8001:80
+        environment:
+            APP_ENV: local
+            CACHE_STORE: redis
+            REDIS_HOST: redis
+        networks:
+            - test
+        depends_on:
+            - redis
+
+    redis:
+        image: 'redis:7.0'
+        volumes:
+            - 'test-redis:/data'
+        networks:
+            - test
+        healthcheck:
+            test: [ "CMD", "redis-cli", "ping" ]
+            retries: 3
+            timeout: 5s
+
+networks:
+    test:
+volumes:
+    test-redis:
